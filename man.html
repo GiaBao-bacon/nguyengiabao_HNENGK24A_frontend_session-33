@@ -1,40 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Toggle Password Visibility</title>
-  <style>
-    .password-toggle {
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng Thời tiết</title>
+    <style>
+        .weather-info {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-  <div>
-    <label for="password">Enter your password:</label>
-    <input type="password" id="password" name="password">
-    <span class="password-toggle">&#x1F441;</span> 
-  </div>
+    <div class="container">
+        <h2>Ứng dụng Thời tiết</h2>
+        <select id="citySelect">
+            <option value="hochiminh">Hồ Chí Minh</option>
+            <option value="hanoi">Hà Nội</option>
+        </select>
+        <div id="weatherDisplay" class="weather-info"></div>
+    </div>
 
-  <script>
-    function togglePassword() {
-      const passwordInput = document.getElementById("password");
-      const passwordToggle = document.querySelector(".password-toggle");
+    <script>
+        const weatherData = {
+            hochiminh: {
+                temperature: 32,
+                humidity: 75,
+                windSpeed: 7
+            },
+            hanoi: {
+                temperature: 28,
+                humidity: 80,
+                windSpeed: 5
+            }
+        };
 
-      if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        passwordToggle.textContent = "️"; 
-      } else {
-        passwordInput.type = "password";
-        passwordToggle.textContent = "️‍️"; 
-      }
-    }
+        const citySelect = document.getElementById('citySelect');
+        const weatherDisplay = document.getElementById('weatherDisplay');
 
-    const passwordToggle = document.querySelector(".password-toggle");
-    if (passwordToggle) {
-      passwordToggle.addEventListener("click", togglePassword);
-    }
-  </script>
+        function displayWeather(city) {
+            const weather = weatherData[city];
+            if (weather) {
+                weatherDisplay.innerHTML = `
+                    <h3>${citySelect.options[citySelect.selectedIndex].text}</h3>
+                    <p>Nhiệt độ: ${weather.temperature} °C</p>
+                    <p>Độ ẩm: ${weather.humidity} %</p>
+                    <p>Tốc độ gió: ${weather.windSpeed} km/h</p>
+                `;
+            } else {
+                weatherDisplay.textContent = 'Không tìm thấy thông tin thời tiết.';
+            }
+        }
+
+        citySelect.addEventListener('change', function() {
+            const selectedCity = citySelect.value;
+            displayWeather(selectedCity);
+        });
+
+        displayWeather(citySelect.value);
+    </script>
 </body>
 </html>
