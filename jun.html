@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lọc sản phẩm</title>
+</head>
+<body>
+    <h2>Lọc sản phẩm theo danh mục</h2>
+    <select id="categoryFilter">
+        <option value="">Tất cả</option>
+        <option value="Đồ ăn">Đồ ăn</option>
+        <option value="Nước">Nước</option>
+        <option value="Dụng cụ">Dụng cụ</option>
+    </select>
+    <button id="filterButton">Lọc</button>
+    <ul id="productList"></ul>
+
+    <script>
+        const products = [
+            { name: "Rau sạch", category: "Đồ ăn" },
+            { name: "Thịt lợn", category: "Đồ ăn" },
+            { name: "Pepsi không calo", category: "Nước" },
+            { name: "Cocacola", category: "Nước" },
+            { name: "Cờ lê", category: "Dụng cụ" },
+            { name: "Tua vít", category: "Dụng cụ" }
+        ];
+
+        const categoryFilter = document.getElementById('categoryFilter');
+        const filterButton = document.getElementById('filterButton');
+        const productList = document.getElementById('productList');
+
+        function displayProducts(filteredProducts) {
+            productList.innerHTML = '';
+            filteredProducts.forEach(product => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Tên đồ ăn: ${product.name} - Danh mục: ${product.category}`;
+                productList.appendChild(listItem);
+            });
+        }
+
+        filterButton.addEventListener('click', function() {
+            const selectedCategory = categoryFilter.value;
+            let filteredProducts = products;
+
+            if (selectedCategory) {
+                filteredProducts = products.filter(product => product.category === selectedCategory);
+            }
+
+            displayProducts(filteredProducts);
+        });
+
+        displayProducts(products);
+    </script>
+</body>
+</html>
